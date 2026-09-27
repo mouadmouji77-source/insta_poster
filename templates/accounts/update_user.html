@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Mettre à jour l'utilisateur{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="
+        color: #405DE6; /* Bleu Instagram */
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    ">Mettre à jour l'utilisateur</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-light rounded-lg">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.name == 'password' %}
+                            <br> <!-- Ajouter un saut de ligne après le champ mot de passe -->
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-lg ml-3">Retour au
+                                tableau de bord</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Style général des formulaires */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        border: 1px solid #ced4da;
+        padding: 0.75rem 1.25rem;
+        box-shadow: none;
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #405DE6;
+        /* Bleu Instagram */
+        box-shadow: 0 0 0 0.2rem rgba(64, 93, 230, 0.25);
+    }
+
+    /* Style des boutons */
+    .btn-primary {
+        background-color: #405DE6;
+        /* Bleu Instagram */
+        border-color: #405DE6;
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #354B8A;
+        /* Teinte plus foncée au survol */
+        border-color: #354B8A;
+    }
+
+    .btn-secondary {
+        background-color: #FDCB58;
+        /* Orange Instagram */
+        border-color: #FDCB58;
+        color: #fff;
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #FDCB58;
+        /* Orange Instagram */
+        border-color: #FDCB58;
+    }
+
+    /* Style du conteneur */
+    .container {
+        max-width: 900px;
+    }
+</style>
+{% endblock %}

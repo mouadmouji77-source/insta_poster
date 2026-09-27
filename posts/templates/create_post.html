@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Créer un poste</title>
+</head>
+
+<body>
+    <h1>Créer un poste</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="image_url">URL de l'image :</label>
+        <input type="url" id="image_url" name="image_url" required><br><br>
+        <label for="caption">Description :</label>
+        <textarea id="caption" name="caption" required></textarea><br><br>
+        <label for="post_date">Date de publication :</label>
+        <input type="date" id="post_date" name="post_date" value="{{ current_date }}" required><br><br>
+        <label for="post_time">Heure de publication :</label>
+        <input type="time" id="post_time" name="post_time" value="{{ current_time }}" required><br><br>
+        <button type="submit">Poster</button>
+    </form>
+</body>
+
+</html>

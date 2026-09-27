@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un Poste{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        color: #333;
+        /* Couleur de texte neutre pour améliorer la lisibilité */
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        /* Arrière-plan léger pour un style moderne */
+    }
+
+    .container {
+        margin-top: 4rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-align: center;
+        background: -webkit-linear-gradient(45deg, #007bff, #17a2b8, #28a745, #ffc107);
+        /* Nouveau dégradé plus neutre et professionnel */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        border: 1px solid #ced4da;
+        color: #495057;
+        background-color: #fff;
+        box-shadow: none;
+    }
+
+    .form-control:focus {
+        border-color: #17a2b8;
+        /* Couleur de bordure plus douce lors du focus */
+        box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #007bff, #17a2b8, #28a745, #ffc107);
+        /* Nouveau dégradé plus doux pour le bouton */
+        border: none;
+        border-radius: 0.5rem;
+        color: #fff;
+        transition: background 0.3s ease;
+        padding: 10px 20px;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(to right, #0069d9, #138496, #218838, #e0a800);
+        /* Dégradé plus sombre au survol */
+    }
+</style>
+
+<div class="container mt-4">
+    <h1>Créer un poste</h1>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="image_url">URL de l'image :</label>
+            <input type="url" class="form-control form-control-lg" id="image_url" name="image_url"
+                placeholder="Entrez l'URL de l'image" required>
+        </div>
+        <div class="form-group">
+            <label for="caption">Description :</label>
+            <textarea class="form-control form-control-lg" id="caption" name="caption" rows="4"
+                placeholder="Entrez une description pour votre poste" required></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="post_date">Date de publication :</label>
+                <input type="date" class="form-control form-control-lg" id="post_date" name="post_date"
+                    value="{{ current_date }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="post_time">Heure de publication :</label>
+                <input type="time" class="form-control form-control-lg" id="post_time" name="post_time"
+                    value="{{ current_time }}" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Poster</button>
+    </form>
+</div>
+{% endblock %}

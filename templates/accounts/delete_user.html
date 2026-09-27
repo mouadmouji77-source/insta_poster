@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Supprimer l'utilisateur{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Supprimer l'utilisateur</h1>
+    <p>Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ user.username }}</strong> ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-lg">Supprimer l'utilisateur</button>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-lg">Annuler</a>
+    </form>
+</div>
+{% endblock %}

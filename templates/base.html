@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Instagram Poster{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Global body padding to accommodate navbar and footer */
+        body {
+            padding-top: 56px;
+            padding-bottom: 60px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar.bg-light {
+            background-color: #ffffff;
+        }
+
+        .navbar.scrolled {
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar brand logo */
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+            margin-right: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Navbar links styling */
+        .navbar-nav .nav-link {
+            margin-left: 15px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            color: #343a40;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #0056b3;
+        }
+
+        /* Navbar toggler */
+        .navbar-toggler {
+            border: none;
+            outline: none;
+        }
+
+        /* Custom toggle icon */
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=utf8,%3csvg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"%3e%3cpath stroke="rgba(0,0,0,.5)" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/%3e%3c/svg%3e');
+        }
+
+        /* Navbar transition when opened/closed */
+        .navbar-collapse {
+            transition: max-height 0.35s ease;
+        }
+
+        .navbar-collapse.show {
+            max-height: 500px;
+        }
+
+        /* Aligning items in navbar */
+        .navbar-nav.ml-auto {
+            margin-left: auto;
+        }
+
+        /* Greeting style */
+        .greeting {
+            margin-right: 20px;
+            font-weight: 500;
+            color: #343a40;
+        }
+
+        /* Danger button styling */
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: #ffffff;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/logo.jpeg' %}" alt="Logo"> Instagram Poster
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <!-- Admin Navbar Items -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                </li>
+                {% else %}
+                <!-- Regular User Navbar Items -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'create_post' %}">Créer un Post <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posteta' %}">Posts Planifiés</a>
+                </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+            {% if user.is_authenticated %}
+            <span class="navbar-text greeting">Bonjour {{ user.username }}</span>
+            <form action="{% url 'logout' %}" method="post" class="form-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger">Déconnexion</button>
+            </form>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            Developed by Mr. MOUJI Mouad | All rights reserved
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Change navbar color on scroll
+        document.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>

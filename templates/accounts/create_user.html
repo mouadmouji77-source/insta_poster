@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un utilisateur{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="
+        color: #405DE6; /* Bleu Instagram */
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    ">Créer un nouvel utilisateur</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-light rounded-lg">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Nom d'utilisateur</label>
+                            <input type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}"
+                                class="form-control" value="{{ form.username.value|default_if_none:'' }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.access_token.id_for_label }}" class="form-label">Jeton d'accès</label>
+                            <input type="text" name="{{ form.access_token.name }}"
+                                id="{{ form.access_token.id_for_label }}" class="form-control"
+                                value="{{ form.access_token.value|default_if_none:'' }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.instagram_page_id.id_for_label }}" class="form-label">ID de la page
+                                Instagram</label>
+                            <input type="text" name="{{ form.instagram_page_id.name }}"
+                                id="{{ form.instagram_page_id.id_for_label }}" class="form-control"
+                                value="{{ form.instagram_page_id.value|default_if_none:'' }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">Mot de passe</label>
+                            <input type="password" name="{{ form.password1.name }}"
+                                id="{{ form.password1.id_for_label }}" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmer le mot de
+                                passe</label>
+                            <input type="password" name="{{ form.password2.name }}"
+                                id="{{ form.password2.id_for_label }}" class="form-control" />
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Créer l'utilisateur</button>
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-lg ml-3">Retour au
+                                tableau de bord</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Style de la carte */
+    .card {
+        border-radius: 0.75rem;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    /* Style du formulaire */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        border: 1px solid #ced4da;
+        padding: 0.75rem 1.25rem;
+        box-shadow: none;
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #405DE6;
+        /* Bleu Instagram */
+        box-shadow: 0 0 0 0.2rem rgba(64, 93, 230, 0.25);
+    }
+
+    /* Boutons */
+    .btn-primary {
+        background-color: #405DE6;
+        /* Bleu Instagram */
+        border-color: #405DE6;
+        /* Bleu Instagram */
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #354B8A;
+        /* Teinte plus foncée pour le survol */
+        border-color: #354B8A;
+    }
+
+    .btn-secondary {
+        background-color: #FDCB58;
+        /* Orange Instagram */
+        border-color: #FDCB58;
+        /* Orange Instagram */
+        color: #fff;
+        /* Texte blanc */
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #FDCB58;
+        /* Orange Instagram */
+        border-color: #FDCB58;
+    }
+
+    /* Container */
+    .container {
+        max-width: 900px;
+    }
+</style>
+{% endblock %}

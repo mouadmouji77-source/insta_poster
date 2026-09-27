@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-image: url("{% static 'images/BG.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        margin-top: 5rem;
+        padding: 2rem;
+        border-radius: 0.75rem;
+        background-color: rgba(34, 34, 34, 0.9);
+        /* Darker background */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .login-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-container h2 {
+        font-size: 2rem;
+        color: #f0c14b;
+        /* Golden yellow text */
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+        color: #f0f0f0;
+        /* Light grey for labels */
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        border: 1px solid #8c8c8c;
+        /* Light grey border */
+        padding: 0.75rem;
+        color: #333;
+        font-size: 1rem;
+        background-color: #f7f7f7;
+        /* Light background for input fields */
+        transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: #f0c14b;
+        /* Golden yellow on focus */
+        box-shadow: 0 0 0 0.2rem rgba(240, 193, 75, 0.25);
+        outline: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #f0c14b, #ff9900);
+        /* Yellow to orange gradient */
+        border: none;
+        border-radius: 0.5rem;
+        color: #333;
+        /* Dark text on the button */
+        font-size: 1rem;
+        padding: 0.75rem;
+        transition: background 0.3s ease, transform 0.2s ease;
+        display: block;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(to right, #ff9900, #cc8400);
+        /* Darker orange on hover */
+        transform: translateY(-2px);
+    }
+
+    .role-group {
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .role-group label {
+        display: inline-block;
+        margin-right: 1rem;
+        color: #f0f0f0;
+        font-weight: 600;
+    }
+
+    .role-group input[type="radio"] {
+        margin-right: 0.5rem;
+    }
+
+    .alert {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        color: #fff;
+    }
+
+    .alert-danger {
+        background-color: #d9534f;
+        /* Danger red */
+        color: #fff;
+    }
+
+    @media (max-width: 576px) {
+        .login-container {
+            padding: 1.5rem;
+        }
+
+        .form-control {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            font-size: 0.875rem;
+            padding: 0.65rem;
+        }
+
+        .login-container h2 {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="login-container">
+                <h2>Bienvenue dans Instagram Poster</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur:</label>
+                        <input type="text" id="username" name="username" class="form-control"
+                            placeholder="Entrez votre nom d'utilisateur" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="Entrez votre mot de passe" required>
+                    </div>
+                    <div class="form-group role-group">
+                        <label>Je me connecte en tant que:</label><br>
+                        <input type="radio" id="admin" name="role" value="admin">
+                        <label for="admin">Admin</label>
+                        <input type="radio" id="user" name="role" value="user" checked>
+                        <label for="user">Utilisateur</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Connexion</button>
+
+                    {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
